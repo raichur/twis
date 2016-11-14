@@ -1,16 +1,16 @@
-var width = 1000,
-    height = 1000;
+var width = $(window).width(),
+    height = $(window).height();
 
-debugger;
+console.log(JSON.stringify(json));
 
 var svg = d3.select("body").append("svg")
     .attr("width", width)
     .attr("height", height);
 
 var force = d3.layout.force()
-    .gravity(.05)
-    .distance(100)
-    .charge(-100)
+    .gravity(.09)
+    .distance(150)
+    .charge(-300)
     .size([width, height]);
 
 force
@@ -31,11 +31,13 @@ var node = svg.selectAll(".node")
     .call(force.drag);
 
 node.append("circle")
+    .attr("fill", function(d) { return d.color; })
     .attr("r","5");
 
 node.append("text")
     .attr("dx", 12)
-    .attr("dy", ".35em")
+    .attr("dy", ".3em")
+    .attr("font-family", "BlinkMacSystemFont")
     .text(function(d) { return d.name });
 
 force.on("tick", function() {
