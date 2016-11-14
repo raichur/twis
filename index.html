@@ -3,8 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <title><%= twitter_data.username %></title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <%= twitter_data.list %>
+  <%- twitter_data.list %>
+
+  <svg width="960" height="600"></svg>
+
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src="/chart.js" charset="utf-8"></script>
 </body>
 </html>

@@ -4,11 +4,13 @@ var fs = require('fs');
 var ejs = require('ejs');
 var Twit = require('twit');
 var config = require('./cred');
+var path = require('path');
 var T = new Twit(config);
 
 var app = express();
 
 app.set('port', process.env.PORT || 3000);
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function (req, res) {
   res.writeHead(200, {'Content-Type': 'text/html'});
@@ -35,10 +37,12 @@ app.get('/:user', function (req, res) {
     var twitter_data = [];
     twitter_data.username = "Person Not Found";
     T.get('followers/ids', { screen_name: req.params.user },  function (err, data, response) {
-      var users = "";
+      var users = "<ul>";
       for(var person in data.ids) {
-        users += data.ids[person] + " ";
+        users += "<li>" + data.ids[person] + "</li>";
       }
+      users += "</ul>";
+      twitter_data.username = req.params.user;
       twitter_data.list = users;
       var html = ejs.render(content, {twitter_data: twitter_data});
       res.end(html);
